@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bronco Braves — Full Field Defense Rotations</title>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --charcoal: #25282a;
+  --slate: #5b6770;
+  --light: #c1c6c8;
+  --blue: #0057b8;
+  --blue-light: #2a7de1;
+  --blue-glow: rgba(0,87,184,0.18);
+  --surface: #2e3236;
+  --surface2: #373c41;
+  --border: #444a50;
+  --text: #e8eaeb;
+  --text-dim: #8e969c;
+  --green: #2ea043;
+  --red: #cf3d3d;
+  --purple: #7c5cbc;
+  --purple-dim: rgba(124,92,188,0.18);
+  --gold: #d4a017;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Karla', sans-serif;
+  background: var(--charcoal);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: linear-gradient(135deg, #1a1c1e 0%, #25282a 100%);
+  border-bottom: 3px solid var(--blue);
+  padding: 14px 24px;
+  display: flex; align-items: center; gap: 14px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+.logo-badge {
+  background: var(--blue);
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.header-title {
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.header-title span { color: var(--blue-light); }
+
+.header-actions {
+  margin-left: auto;
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+}
+
+.btn {
+  font-family: 'Karla', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 7px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn:hover { border-color: var(--blue); background: var(--blue-glow); color: #fff; }
+.btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+.btn.primary:hover { background: var(--blue-light); border-color: var(--blue-light); }
+.btn.danger { border-color: #5a3030; }
+.btn.danger:hover { border-color: var(--red); background: rgba(207,61,61,0.15); color: var(--red); }
+.btn.success { border-color: #2a5c35; }
+.btn.success:hover { border-color: var(--green); background: rgba(46,160,67,0.15); color: var(--green); }
+
+/* ── MAIN LAYOUT ── */
+.main { padding: 20px 24px 40px; max-width: 1400px; margin: 0 auto; }
+
+/* ── DRILL CONFIG PANEL ── */
+.config-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 16px;
+  align-items: end;
+}
+
+.config-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.config-group input,
+.config-group select {
+  font-family: 'Karla', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  padding: 7px 10px;
+  width: 100%;
+}
+
+.config-group input:focus, .config-group select:focus {
+  outline: none; border-color: var(--blue);
+}
+
+/* ── ATTENDANCE ── */
+.attendance-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.attendance-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.panel-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+}
+
+.player-chips {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+
+.player-chip {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.player-chip.present {
+  background: rgba(46,160,67,0.15);
+  border-color: var(--green);
+  color: #7de89c;
+}
+
+.player-chip.absent {
+  background: var(--surface2);
+  border-color: var(--border);
+  color: var(--text-dim);
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.player-chip:hover { opacity: 1 !important; }
+
+.attendance-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.attendance-count span { color: var(--green); }
+
+/* ── ROTATION TABS ── */
+.rotation-tabs {
+  display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;
+}
+
+.rot-tab {
+  font-family: 'Karla', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 7px 16px;
+  border-radius: 4px 4px 0 0;
+  border: 1.5px solid var(--border);
+  border-bottom: none;
+  background: var(--surface);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.rot-tab:hover { color: var(--text); border-color: var(--blue); }
+.rot-tab.active {
+  background: var(--surface2);
+  border-color: var(--blue);
+  color: var(--text);
+}
+
+.rot-tab.add-tab {
+  color: var(--blue-light);
+  border-style: dashed;
+}
+
+/* ── ROTATION GRID ── */
+.rotation-wrapper {
+  background: var(--surface2);
+  border: 1.5px solid var(--blue);
+  border-radius: 0 8px 8px 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.rotation-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.meta-field label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.meta-field input {
+  font-family: 'Karla', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  padding: 6px 10px;
+  width: 100%;
+}
+
+.meta-field input:focus { outline: none; border-color: var(--blue); }
+
+/* ── POSITION SECTIONS ── */
+.section-header {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin: 18px 0 12px;
+}
+
+.section-header:first-child { margin-top: 0; }
+
+.positions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+/* ── POSITION CELL ── */
+.pos-cell {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  min-height: 64px;
+  transition: border-color 0.15s;
+}
+
+.pos-cell:hover { border-color: var(--slate); }
+
+.pos-cell.has-player { border-color: var(--blue); }
+
+.pos-cell.section-bench { border-color: var(--border); }
+.pos-cell.section-runner { border-color: #4a3a1a; background: rgba(212,160,23,0.06); }
+
+.pos-label {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.pos-name {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+}
+
+.pos-abbrev {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--blue-light);
+  background: var(--blue-glow);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.pos-abbrev.runner-badge {
+  color: var(--gold);
+  background: rgba(212,160,23,0.15);
+}
+
+.assignment-area {
+  display: flex; flex-wrap: wrap; gap: 4px; min-height: 28px;
+  align-items: flex-start;
+}
+
+/* Player / Coach chips in cells */
+.assigned-chip {
+  display: flex; align-items: center; gap: 4px;
+  padding: 3px 8px 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  max-width: 100%;
+}
+
+.assigned-chip.player-type {
+  background: rgba(0,87,184,0.2);
+  border: 1px solid rgba(0,87,184,0.5);
+  color: #9bc5f0;
+}
+
+.assigned-chip.coach-type {
+  background: var(--purple-dim);
+  border: 1px solid rgba(124,92,188,0.4);
+  color: #b89cec;
+}
+
+.assigned-chip .remove-btn {
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 10px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.assigned-chip .remove-btn:hover { opacity: 1; }
+
+.coach-name-input {
+  font-family: 'Karla', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  color: #b89cec;
+  width: 70px;
+  outline: none;
+}
+
+.cell-actions {
+  display: flex; gap: 4px; margin-top: 4px;
+}
+
+.cell-btn {
+  font-family: 'Karla', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  transition: all 0.1s;
+}
+
+.cell-btn:hover { border-color: var(--blue); color: var(--blue-light); background: var(--blue-glow); }
+.cell-btn.coach-btn:hover { border-color: var(--purple); color: #b89cec; background: var(--purple-dim); }
+
+/* Dropdown */
+.dropdown-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  display: none;
+}
+
+.dropdown-overlay.open { display: block; }
+
+.player-dropdown {
+  position: fixed;
+  background: var(--surface);
+  border: 1.5px solid var(--blue);
+  border-radius: 6px;
+  padding: 6px;
+  z-index: 501;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  max-height: 280px;
+  overflow-y: auto;
+  display: none;
+}
+
+.player-dropdown.open { display: block; }
+
+.dropdown-item {
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.1s;
+  color: var(--text);
+}
+
+.dropdown-item:hover { background: var(--blue-glow); color: #fff; }
+.dropdown-item.unavailable { color: var(--text-dim); opacity: 0.5; cursor: default; }
+.dropdown-item.unavailable:hover { background: none; color: var(--text-dim); }
+
+.dropdown-empty {
+  padding: 8px 10px;
+  font-size: 11px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* ── COACH SLOTS ── */
+.coach-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.coach-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.coach-role-cell {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.coach-role-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.coach-role-sub {
+  font-size: 10px;
+  color: var(--slate);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.coach-assignment {
+  display: flex; align-items: center; gap: 6px;
+}
+
+.coach-assignment input {
+  font-family: 'Karla', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  color: #b89cec;
+  padding: 5px 8px;
+  flex: 1;
+}
+
+.coach-assignment input:focus { outline: none; border-color: var(--purple); }
+.coach-assignment input::placeholder { color: var(--text-dim); font-weight: 400; font-style: italic; }
+
+/* ── FUNGO SEQUENCE ── */
+.fungo-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.fungo-phases {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.fungo-phase {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.fungo-phase-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--blue-light);
+  margin-bottom: 8px;
+}
+
+.fungo-list { list-style: none; }
+.fungo-list li {
+  font-size: 12px;
+  color: var(--text-dim);
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex; align-items: center; gap: 6px;
+}
+
+.fungo-list li:last-child { border-bottom: none; }
+
+.fungo-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px;
+  background: var(--blue-glow);
+  border: 1px solid var(--blue);
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--blue-light);
+  flex-shrink: 0;
+}
+
+/* ── PRINT ── */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  body { background: #fff !important; color: #000 !important; font-family: 'Karla', sans-serif; font-size: 9pt; }
+
+  .header, .main > .config-panel, .main > .attendance-panel,
+  .rotation-tabs, .coach-panel, .fungo-panel,
+  .header-actions, .cell-actions, .no-print { display: none !important; }
+
+  .main { padding: 0; max-width: 100%; }
+
+  .rotation-wrapper { background: #fff !important; border: none !important; padding: 0; margin: 0; }
+
+  .rotation-meta { display: none; }
+
+  .print-header {
+    display: block !important;
+    border-bottom: 2px solid #0057b8;
+    padding-bottom: 8pt;
+    margin-bottom: 12pt;
+  }
+
+  .print-title {
+    font-size: 15pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #0057b8;
+  }
+
+  .print-subtitle {
+    font-size: 9pt;
+    color: #5b6770;
+    margin-top: 2pt;
+  }
+
+  .print-meta-row {
+    display: flex; gap: 24pt; margin-top: 6pt;
+  }
+
+  .print-meta-item {
+    font-size: 8pt;
+  }
+
+  .print-meta-item strong { color: #25282a; }
+
+  /* Coach table */
+  .print-coaches { display: block !important; margin-bottom: 14pt; }
+
+  .section-header {
+    font-size: 8pt !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    color: #5b6770 !important;
+    border-bottom: 1px solid #c1c6c8 !important;
+    padding-bottom: 3pt;
+    margin: 10pt 0 6pt !important;
+  }
+
+  .positions-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6pt !important;
+  }
+
+  .pos-cell {
+    background: #fff !important;
+    border: 1pt solid #c1c6c8 !important;
+    border-radius: 3pt !important;
+    padding: 5pt 7pt !important;
+    min-height: 40pt !important;
+  }
+
+  .pos-cell.has-player { border-color: #0057b8 !important; }
+  .pos-cell.section-runner { border-color: #d4a017 !important; background: #fffdf0 !important; }
+
+  .pos-name { color: #5b6770 !important; font-size: 7pt !important; }
+
+  .pos-abbrev { color: #0057b8 !important; background: #e8f0fb !important; font-size: 7pt !important; }
+  .pos-abbrev.runner-badge { color: #8a6800 !important; background: #fef8e1 !important; }
+
+  .assigned-chip {
+    padding: 2pt 5pt !important;
+    font-size: 8pt !important;
+    border-radius: 8pt !important;
+  }
+
+  .assigned-chip.player-type {
+    background: #e8f0fb !important;
+    border-color: #0057b8 !important;
+    color: #0057b8 !important;
+  }
+
+  .assigned-chip.coach-type {
+    background: #f0ebfb !important;
+    border-color: #7c5cbc !important;
+    color: #4a2a8c !important;
+  }
+
+  .remove-btn { display: none !important; }
+
+  .coach-name-input { color: #4a2a8c !important; width: auto !important; }
+
+  /* Print fungo & reminders */
+  .print-fungo { display: block !important; margin-top: 10pt; }
+  .print-reminders { display: block !important; margin-top: 8pt; }
+
+  table.print-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8pt;
+    margin-bottom: 8pt;
+  }
+
+  table.print-table th {
+    background: #25282a !important;
+    color: #fff !important;
+    padding: 4pt 6pt;
+    text-align: left;
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  table.print-table td {
+    padding: 3pt 6pt;
+    border-bottom: 1pt solid #e0e0e0;
+    vertical-align: top;
+  }
+
+  table.print-table tr:nth-child(even) td { background: #f5f7f8 !important; }
+}
+
+.print-header { display: none; }
+.print-coaches { display: none; }
+.print-fungo { display: none; }
+.print-reminders { display: none; }
+
+/* ── EDITABLE FUNGO ── */
+.fungo-phase-header {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+}
+
+.fungo-title-input {
+  font-family: 'Karla', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid transparent;
+  color: var(--blue-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 100%;
+  outline: none;
+  padding: 2px 0;
+  transition: border-color 0.15s;
+}
+
+.fungo-title-input:hover,
+.fungo-title-input:focus { border-bottom-color: var(--blue); }
+
+.fungo-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.fungo-item:last-child { border-bottom: none; }
+
+.fungo-item-input {
+  font-family: 'Karla', sans-serif;
+  font-size: 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--text-dim);
+  flex: 1;
+  outline: none;
+  padding: 1px 0;
+  transition: border-color 0.15s;
+}
+
+.fungo-item-input:hover,
+.fungo-item-input:focus { border-bottom-color: var(--border); color: var(--text); }
+
+.fungo-item-del {
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.1s;
+  flex-shrink: 0;
+  padding: 2px 4px;
+}
+
+.fungo-item:hover .fungo-item-del { opacity: 0.6; }
+.fungo-item-del:hover { opacity: 1 !important; color: var(--red); }
+
+.fungo-add-item {
+  font-family: 'Karla', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  background: none;
+  border: 1px dashed var(--border);
+  border-radius: 3px;
+  padding: 3px 8px;
+  cursor: pointer;
+  margin-top: 6px;
+  width: 100%;
+  transition: all 0.15s;
+}
+
+.fungo-add-item:hover { border-color: var(--blue); color: var(--blue-light); }
+
+/* Rotation name and delete */
+.rot-tab-inner { display: flex; align-items: center; gap: 5px; }
+.rot-tab-del { opacity: 0.4; font-size: 10px; margin-left: 2px; }
+.rot-tab-del:hover { opacity: 1; color: var(--red); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo-badge">BB</div>
+  <div class="header-title">Bronco Braves <span>Full Field Defense</span></div>
+  <div class="header-actions">
+    <button class="btn success" onclick="autoFillRotation()">⚡ Auto-Fill</button>
+    <button class="btn danger" onclick="clearRotation()">✕ Clear Rotation</button>
+    <button class="btn primary" onclick="window.print()">🖨 Print</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- DRILL CONFIG -->
+  <div class="config-panel no-print">
+    <div class="config-group">
+      <label>Drill Date</label>
+      <input type="text" id="drillDate" placeholder="e.g. Wednesday, Feb 18, 2026">
+    </div>
+    <div class="config-group">
+      <label>Number of Rotations</label>
+      <select id="numRotations" onchange="syncRotationCount()">
+        <option value="1">1 Rotation</option>
+        <option value="2">2 Rotations</option>
+        <option value="3" selected>3 Rotations</option>
+        <option value="4">4 Rotations</option>
+        <option value="5">5 Rotations</option>
+      </select>
+    </div>
+    <div>
+      <button class="btn primary" onclick="syncRotationCount()">Apply</button>
+    </div>
+  </div>
+
+  <!-- ATTENDANCE -->
+  <div class="attendance-panel no-print">
+    <div class="attendance-header">
+      <span class="panel-label">Player Attendance</span>
+      <span class="attendance-count" id="attendanceCount"><span>0</span> / 12 present</span>
+    </div>
+    <div class="player-chips" id="playerChips"></div>
+  </div>
+
+  <!-- COACH ROLES -->
+  <div class="coach-panel no-print">
+    <div class="panel-label">Coach Roles</div>
+    <div class="coach-roles-grid" id="coachRolesGrid"></div>
+  </div>
+
+  <!-- FUNGO SEQUENCE (editable) -->
+  <div class="fungo-panel no-print">
+    <div class="panel-label" style="margin-bottom:10px;">Fungo Sequence Reference</div>
+    <div class="fungo-phases" id="fungoPhases"></div>
+  </div>
+
+  <!-- ROTATION TABS -->
+  <div class="rotation-tabs" id="rotationTabs"></div>
+
+  <!-- ROTATION CONTENT -->
+  <div id="rotationContent"></div>
+
+</div>
+
+<!-- DROPDOWN -->
+<div class="dropdown-overlay" id="dropdownOverlay" onclick="closeDropdown()"></div>
+<div class="player-dropdown" id="playerDropdown"></div>
+
+<script>
+// ════════════════════════════════════
+// DATA
+// ════════════════════════════════════
+
+const PLAYERS = [
+  "H. Reinhardt","J. Reinhardt","B. Cox","R. Sullivan",
+  "G. Williams","C. Coleman","M. Cage","M. Warren",
+  "L. Fraser","N. Crosby","G. Sprague","F. Butler"
+];
+
+// Editable fungo sequence state
+let fungoPhases = [
+  {
+    title: "Phase 1 — Runner on 2nd Only",
+    items: [
+      "Base hit directly to LF",
+      "Base hit directly to RF",
+      "Base hit directly to CF",
+      "In-between — LF/CF gap",
+      "In-between — RF/CF gap"
+    ]
+  },
+  {
+    title: "Phase 2 — Runners on 1st & 2nd",
+    items: [
+      "Same 5-ball sequence",
+      "Complete all rotations Phase 1 first",
+      "Then repeat all rotations with 1st & 2nd"
+    ]
+  }
+];
+
+const POSITION_GROUPS = [
+  {
+    label: "Defense",
+    positions: [
+      { key: "C",  name: "Catcher",      abbrev: "C",  section: "defense" },
+      { key: "P",  name: "Pitcher",       abbrev: "P",  section: "defense" },
+      { key: "CF", name: "Center Field",  abbrev: "CF", section: "defense" },
+      { key: "SS", name: "Shortstop",     abbrev: "SS", section: "defense" },
+      { key: "2B", name: "Second Base",   abbrev: "2B", section: "defense" },
+      { key: "3B", name: "Third Base",    abbrev: "3B", section: "defense" },
+      { key: "1B", name: "First Base",    abbrev: "1B", section: "defense" },
+      { key: "LF", name: "Left Field",    abbrev: "LF", section: "defense" },
+      { key: "RF", name: "Right Field",   abbrev: "RF", section: "defense" },
+    ]
+  },
+  {
+    label: "Bench",
+    positions: [
+      { key: "BN", name: "Bench",         abbrev: "BN", section: "bench"  },
+    ]
+  },
+  {
+    label: "Base Runners",
+    positions: [
+      { key: "R2", name: "Runner — 2nd Base", abbrev: "R2", section: "runner" },
+    ]
+  }
+];
+
+const ALL_POSITIONS = POSITION_GROUPS.flatMap(g => g.positions);
+
+const COACH_ROLES = [
+  { key: "fungo",   label: "Fungo Hitter",         sub: "Hitting/throwing fungo from home plate" },
+  { key: "infield", label: "Roving Infield Coach",  sub: "Focus on middle infielders" },
+  { key: "outfield",label: "Roving Outfield Coach", sub: "Helping outfielders" },
+  { key: "catcher", label: "Catcher Coach",         sub: "Working with catcher" },
+  { key: "third",   label: "3rd Base Coach",        sub: "Helping 3rd baseman (optional)" },
+];
+
+const PLAYER_POSITIONS = {
+  "H. Reinhardt": ["RF","LF","CF","P","3B"],
+  "J. Reinhardt": ["P","CF","3B","2B","SS","LF","RF"],
+  "B. Cox":       ["C","P","1B","LF","RF","3B"],
+  "R. Sullivan":  ["1B","C","P","3B","LF","RF","CF","SS","2B"],
+  "G. Williams":  ["2B","CF","LF","RF","SS","P","3B"],
+  "C. Coleman":   ["RF","C","2B","1B","3B","LF","P"],
+  "M. Cage":      ["SS","3B","P","CF","2B","LF","RF"],
+  "M. Warren":    ["RF","LF","2B"],
+  "L. Fraser":    ["3B","LF","1B","RF"],
+  "N. Crosby":    ["3B","P","LF","RF","C","1B"],
+  "G. Sprague":   ["LF","RF","3B","C","P"],
+  "F. Butler":    ["SS","CF","LF","RF","2B"]
+};
+
+// ════════════════════════════════════
+// STATE
+// ════════════════════════════════════
+
+let attendance = {}; // player -> true/false
+let rotations = [];  // array of rotation objects
+let activeRot = 0;
+let numRotations = 3;
+
+let dropdownCtx = null; // { rotIdx, posKey }
+
+// Rotation: { name: string, assignments: { posKey: [ {type:'player'|'coach', value:string} ] }, meta: { date:'', rotLabel:'' } }
+
+function initState() {
+  PLAYERS.forEach(p => { attendance[p] = true; });
+  for (let i = 0; i < numRotations; i++) {
+    rotations.push(makeRotation(i));
+  }
+  document.getElementById('drillDate').value = new Date().toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+}
+
+function makeRotation(idx) {
+  const assignments = {};
+  ALL_POSITIONS.forEach(pos => { assignments[pos.key] = []; });
+  return {
+    name: `Rotation ${idx + 1}`,
+    assignments
+  };
+}
+
+// ════════════════════════════════════
+// ATTENDANCE
+// ════════════════════════════════════
+
+function renderAttendance() {
+  const container = document.getElementById('playerChips');
+  container.innerHTML = '';
+  let present = 0;
+  PLAYERS.forEach(p => {
+    if (attendance[p]) present++;
+    const chip = document.createElement('div');
+    chip.className = 'player-chip ' + (attendance[p] ? 'present' : 'absent');
+    chip.textContent = p;
+    chip.onclick = () => {
+      attendance[p] = !attendance[p];
+      renderAttendance();
+      renderRotation();
+    };
+    container.appendChild(chip);
+  });
+  document.getElementById('attendanceCount').innerHTML = `<span>${present}</span> / ${PLAYERS.length} present`;
+}
+
+// ════════════════════════════════════
+// FUNGO SEQUENCE (editable)
+// ════════════════════════════════════
+
+function renderFungoPanel() {
+  const container = document.getElementById('fungoPhases');
+  container.innerHTML = '';
+
+  fungoPhases.forEach((phase, pIdx) => {
+    const phaseEl = document.createElement('div');
+    phaseEl.className = 'fungo-phase';
+
+    // Editable title
+    const header = document.createElement('div');
+    header.className = 'fungo-phase-header';
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.className = 'fungo-title-input';
+    titleInput.value = phase.title;
+    titleInput.oninput = (e) => { fungoPhases[pIdx].title = e.target.value; };
+    header.appendChild(titleInput);
+    phaseEl.appendChild(header);
+
+    // Items list
+    const list = document.createElement('ul');
+    list.className = 'fungo-list';
+    list.style.listStyle = 'none';
+
+    phase.items.forEach((item, iIdx) => {
+      const li = document.createElement('li');
+      li.className = 'fungo-item';
+
+      const num = document.createElement('span');
+      num.className = 'fungo-num';
+      num.textContent = iIdx + 1;
+
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.className = 'fungo-item-input';
+      inp.value = item;
+      inp.oninput = (e) => { fungoPhases[pIdx].items[iIdx] = e.target.value; };
+
+      const del = document.createElement('span');
+      del.className = 'fungo-item-del';
+      del.textContent = '✕';
+      del.onclick = () => {
+        fungoPhases[pIdx].items.splice(iIdx, 1);
+        renderFungoPanel();
+      };
+
+      li.appendChild(num);
+      li.appendChild(inp);
+      li.appendChild(del);
+      list.appendChild(li);
+    });
+
+    phaseEl.appendChild(list);
+
+    // Add item button
+    const addBtn = document.createElement('button');
+    addBtn.className = 'fungo-add-item';
+    addBtn.textContent = '+ Add Item';
+    addBtn.onclick = () => {
+      fungoPhases[pIdx].items.push('');
+      renderFungoPanel();
+      // Focus the new input
+      setTimeout(() => {
+        const inputs = phaseEl.querySelectorAll('.fungo-item-input');
+        if (inputs.length) inputs[inputs.length - 1].focus();
+      }, 50);
+    };
+    phaseEl.appendChild(addBtn);
+
+    container.appendChild(phaseEl);
+  });
+}
+
+// ════════════════════════════════════
+// COACH ROLES (global)
+// ════════════════════════════════════
+
+let coachValues = {};
+COACH_ROLES.forEach(r => { coachValues[r.key] = ''; });
+
+function renderCoachRoles() {
+  const grid = document.getElementById('coachRolesGrid');
+  grid.innerHTML = '';
+  COACH_ROLES.forEach(role => {
+    const cell = document.createElement('div');
+    cell.className = 'coach-role-cell';
+    cell.innerHTML = `
+      <div class="coach-role-label">${role.label}</div>
+      <div class="coach-role-sub">${role.sub}</div>
+      <div class="coach-assignment">
+        <input type="text" placeholder="Coach name…" value="${coachValues[role.key]}"
+          data-role="${role.key}"
+          oninput="coachValues['${role.key}']=this.value"
+        >
+      </div>
+    `;
+    grid.appendChild(cell);
+  });
+}
+
+// ════════════════════════════════════
+// ROTATION TABS
+// ════════════════════════════════════
+
+function renderTabs() {
+  const tabs = document.getElementById('rotationTabs');
+  tabs.innerHTML = '';
+  rotations.forEach((rot, idx) => {
+    const tab = document.createElement('div');
+    tab.className = 'rot-tab' + (idx === activeRot ? ' active' : '');
+    tab.innerHTML = `<span class="rot-tab-inner">
+      <span>${rot.name}</span>
+      ${rotations.length > 1 ? `<span class="rot-tab-del" onclick="deleteRotation(event,${idx})">✕</span>` : ''}
+    </span>`;
+    tab.onclick = (e) => {
+      if (e.target.classList.contains('rot-tab-del')) return;
+      activeRot = idx;
+      renderTabs();
+      renderRotation();
+    };
+    tabs.appendChild(tab);
+  });
+
+  const addTab = document.createElement('div');
+  addTab.className = 'rot-tab add-tab';
+  addTab.textContent = '+ Add Rotation';
+  addTab.onclick = () => {
+    rotations.push(makeRotation(rotations.length));
+    activeRot = rotations.length - 1;
+    renderTabs();
+    renderRotation();
+  };
+  tabs.appendChild(addTab);
+}
+
+function syncRotationCount() {
+  const n = parseInt(document.getElementById('numRotations').value);
+  while (rotations.length < n) rotations.push(makeRotation(rotations.length));
+  if (rotations.length > n) { rotations = rotations.slice(0, n); if (activeRot >= n) activeRot = n-1; }
+  renderTabs();
+  renderRotation();
+}
+
+function deleteRotation(e, idx) {
+  e.stopPropagation();
+  if (rotations.length <= 1) return;
+  rotations.splice(idx, 1);
+  if (activeRot >= rotations.length) activeRot = rotations.length - 1;
+  renderTabs();
+  renderRotation();
+}
+
+// ════════════════════════════════════
+// ROTATION RENDER
+// ════════════════════════════════════
+
+function renderRotation() {
+  const rot = rotations[activeRot];
+  const container = document.getElementById('rotationContent');
+  container.innerHTML = '';
+
+  // Print header (hidden on screen)
+  const ph = document.createElement('div');
+  ph.className = 'print-header';
+  const drillDate = document.getElementById('drillDate')?.value || '';
+  const presentPlayers = PLAYERS.filter(p => attendance[p]);
+  ph.innerHTML = `
+    <div class="print-title">Bronco Braves Full Field Defense — ${rot.name}</div>
+    <div class="print-subtitle">${drillDate} &nbsp;·&nbsp; ${presentPlayers.length} players present &nbsp;·&nbsp; ${rotations.length} rotation${rotations.length>1?'s':''}</div>
+    <div class="print-meta-row">
+      ${Object.keys(coachValues).map(k => {
+        const role = COACH_ROLES.find(r=>r.key===k);
+        return coachValues[k] ? `<div class="print-meta-item"><strong>${role.label}:</strong> ${coachValues[k]}</div>` : '';
+      }).filter(Boolean).join('')}
+    </div>
+  `;
+  container.appendChild(ph);
+
+  // Print coaches table
+  const pc = document.createElement('div');
+  pc.className = 'print-coaches';
+  pc.innerHTML = `
+    <div style="font-size:9pt;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:#5b6770;border-bottom:1pt solid #c1c6c8;padding-bottom:3pt;margin-bottom:6pt;">Coaches</div>
+    <table class="print-table">
+      <thead><tr><th>Role</th><th>Responsibility</th><th>Name</th></tr></thead>
+      <tbody>
+        ${COACH_ROLES.map(role => `
+          <tr>
+            <td><strong>${role.label}</strong></td>
+            <td>${role.sub}</td>
+            <td>${coachValues[role.key] || '—'}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+  container.appendChild(pc);
+
+  // Rotation wrapper
+  const wrapper = document.createElement('div');
+  wrapper.className = 'rotation-wrapper';
+
+  // Meta fields (screen only)
+  const meta = document.createElement('div');
+  meta.className = 'rotation-meta no-print';
+  meta.innerHTML = `
+    <div class="meta-field">
+      <label>Rotation Name</label>
+      <input type="text" value="${rot.name}" oninput="rotations[${activeRot}].name=this.value; document.querySelectorAll('.rot-tab')[${activeRot}].querySelector('span>span:first-child').textContent=this.value;">
+    </div>
+  `;
+  wrapper.appendChild(meta);
+
+  // Render position groups
+  POSITION_GROUPS.forEach(group => {
+    const secHeader = document.createElement('div');
+    secHeader.className = 'section-header';
+    secHeader.textContent = group.label;
+    wrapper.appendChild(secHeader);
+
+    const grid = document.createElement('div');
+    grid.className = 'positions-grid';
+
+    group.positions.forEach(pos => {
+      const cell = buildPosCell(pos, rot);
+      grid.appendChild(cell);
+    });
+
+    wrapper.appendChild(grid);
+  });
+
+  container.appendChild(wrapper);
+
+  // Print fungo sequence
+  const pf = document.createElement('div');
+  pf.className = 'print-fungo';
+  pf.innerHTML = `
+    <div style="font-size:9pt;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:#5b6770;border-bottom:1pt solid #c1c6c8;padding-bottom:3pt;margin-bottom:6pt;">Fungo Sequence (Per Rotation)</div>
+    <div style="display:grid;grid-template-columns:${fungoPhases.map(()=>'1fr').join(' ')};gap:10pt;">
+      ${fungoPhases.map(phase => `
+        <div>
+          <div style="font-size:8pt;font-weight:800;color:#0057b8;margin-bottom:4pt;">${phase.title}</div>
+          <table class="print-table"><tbody>
+            ${phase.items.map((item, i) => `<tr><td>${i+1}.</td><td>${item}</td></tr>`).join('')}
+          </tbody></table>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  container.appendChild(pf);
+
+  // Print coaching reminders
+  const pr = document.createElement('div');
+  pr.className = 'print-reminders';
+  pr.innerHTML = `
+    <div style="font-size:9pt;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:#5b6770;border-bottom:1pt solid #c1c6c8;padding-bottom:3pt;margin:8pt 0 6pt;">Coaching Reminders</div>
+    <div style="font-size:8pt;color:#25282a;line-height:1.7;">
+      <div>• <strong>Outfielders:</strong> charge the ball — get behind it and throw through the cutoff.</div>
+      <div>• <strong>Infielders:</strong> know where the throw is going before the ball is hit.</div>
+      <div>• <strong>Cutoff alignment:</strong> 1B or SS lines up between outfielder and target base.</div>
+      <div>• <strong>Communication:</strong> outfielders call the ball, infielders call the base.</div>
+      <div>• <strong>On gap balls:</strong> nearest outfielder goes to the ball, other two back up and cover.</div>
+    </div>
+  `;
+  container.appendChild(pr);
+}
+
+function buildPosCell(pos, rot) {
+  const cell = document.createElement('div');
+  const items = rot.assignments[pos.key] || [];
+  const hasPlayer = items.some(i => i.type === 'player');
+  cell.className = `pos-cell${hasPlayer ? ' has-player' : ''}${pos.section === 'runner' ? ' section-runner' : ''}${pos.section === 'bench' ? ' section-bench' : ''}`;
+
+  // Label row
+  const labelRow = document.createElement('div');
+  labelRow.className = 'pos-label';
+  labelRow.innerHTML = `
+    <span class="pos-name">${pos.name}</span>
+    <span class="pos-abbrev${pos.section === 'runner' ? ' runner-badge' : ''}">${pos.abbrev}</span>
+  `;
+  cell.appendChild(labelRow);
+
+  // Assignment area
+  const area = document.createElement('div');
+  area.className = 'assignment-area';
+
+  items.forEach((item, idx) => {
+    const chip = document.createElement('div');
+    chip.className = 'assigned-chip ' + (item.type === 'coach' ? 'coach-type' : 'player-type');
+
+    if (item.type === 'coach') {
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.className = 'coach-name-input';
+      nameInput.placeholder = 'Coach…';
+      nameInput.value = item.value || '';
+      nameInput.oninput = (e) => {
+        rotations[activeRot].assignments[pos.key][idx].value = e.target.value;
+      };
+      chip.appendChild(nameInput);
+    } else {
+      chip.appendChild(document.createTextNode(item.value));
+    }
+
+    const rem = document.createElement('span');
+    rem.className = 'remove-btn';
+    rem.textContent = '✕';
+    rem.onclick = () => {
+      rotations[activeRot].assignments[pos.key].splice(idx, 1);
+      renderRotation();
+    };
+    chip.appendChild(rem);
+    area.appendChild(chip);
+  });
+
+  cell.appendChild(area);
+
+  // Action buttons (screen only)
+  const actions = document.createElement('div');
+  actions.className = 'cell-actions no-print';
+
+  const addPlayerBtn = document.createElement('button');
+  addPlayerBtn.className = 'cell-btn';
+  addPlayerBtn.textContent = '+ Player';
+  addPlayerBtn.onclick = (e) => { e.stopPropagation(); openDropdown(e, activeRot, pos.key); };
+  actions.appendChild(addPlayerBtn);
+
+  const addCoachBtn = document.createElement('button');
+  addCoachBtn.className = 'cell-btn coach-btn';
+  addCoachBtn.textContent = '+ Coach';
+  addCoachBtn.onclick = (e) => {
+    e.stopPropagation();
+    rotations[activeRot].assignments[pos.key].push({ type: 'coach', value: '' });
+    renderRotation();
+  };
+  actions.appendChild(addCoachBtn);
+
+  cell.appendChild(actions);
+  return cell;
+}
+
+// ════════════════════════════════════
+// DROPDOWN
+// ════════════════════════════════════
+
+function openDropdown(e, rotIdx, posKey) {
+  dropdownCtx = { rotIdx, posKey };
+  const rot = rotations[rotIdx];
+  const used = new Set(rot.assignments[posKey].filter(i=>i.type==='player').map(i=>i.value));
+
+  // Build used-elsewhere set
+  const usedElsewhere = new Set();
+  ALL_POSITIONS.forEach(pos => {
+    if (pos.key === posKey) return;
+    (rot.assignments[pos.key]||[]).forEach(i => { if (i.type==='player') usedElsewhere.add(i.value); });
+  });
+
+  const available = PLAYERS.filter(p => attendance[p] && !used.has(p));
+
+  const dropdown = document.getElementById('playerDropdown');
+  dropdown.innerHTML = '';
+
+  if (available.length === 0) {
+    dropdown.innerHTML = '<div class="dropdown-empty">No players available</div>';
+  } else {
+    available.forEach(p => {
+      const item = document.createElement('div');
+      const isElsewhere = usedElsewhere.has(p);
+      item.className = 'dropdown-item' + (isElsewhere ? '' : '');
+      item.textContent = p + (isElsewhere ? ' ⚠' : '');
+      item.title = isElsewhere ? 'Already assigned elsewhere in this rotation' : '';
+      item.onclick = () => {
+        rotations[dropdownCtx.rotIdx].assignments[dropdownCtx.posKey].push({ type: 'player', value: p });
+        closeDropdown();
+        renderRotation();
+      };
+      dropdown.appendChild(item);
+    });
+  }
+
+  // Position the dropdown near the button
+  const rect = e.target.getBoundingClientRect();
+  dropdown.style.top = (rect.bottom + 4) + 'px';
+  dropdown.style.left = rect.left + 'px';
+
+  document.getElementById('dropdownOverlay').classList.add('open');
+  dropdown.classList.add('open');
+}
+
+function closeDropdown() {
+  document.getElementById('dropdownOverlay').classList.remove('open');
+  document.getElementById('playerDropdown').classList.remove('open');
+  dropdownCtx = null;
+}
+
+// ════════════════════════════════════
+// AUTO-FILL
+// ════════════════════════════════════
+
+function autoFillRotation() {
+  const rot = rotations[activeRot];
+  const present = PLAYERS.filter(p => attendance[p]);
+
+  // Clear existing player assignments (keep coaches)
+  ALL_POSITIONS.forEach(pos => {
+    rot.assignments[pos.key] = rot.assignments[pos.key].filter(i => i.type === 'coach');
+  });
+
+  const assigned = new Set();
+  const defensePositions = POSITION_GROUPS[0].positions; // C,P,CF,SS,2B,3B,1B,LF,RF
+
+  // Assign defense by position preference
+  defensePositions.forEach(pos => {
+    const eligible = present.filter(p => {
+      if (assigned.has(p)) return false;
+      const prefs = PLAYER_POSITIONS[p] || [];
+      return prefs.includes(pos.key);
+    });
+    if (eligible.length > 0) {
+      // Sort by preference order
+      eligible.sort((a,b) => {
+        const ai = (PLAYER_POSITIONS[a]||[]).indexOf(pos.key);
+        const bi = (PLAYER_POSITIONS[b]||[]).indexOf(pos.key);
+        return ai - bi;
+      });
+      rot.assignments[pos.key].push({ type: 'player', value: eligible[0] });
+      assigned.add(eligible[0]);
+    }
+  });
+
+  // Remaining unassigned players go to bench
+  const bench = present.filter(p => !assigned.has(p));
+  bench.forEach(p => {
+    rot.assignments['BN'].push({ type: 'player', value: p });
+  });
+
+  renderRotation();
+}
+
+function clearRotation() {
+  const rot = rotations[activeRot];
+  ALL_POSITIONS.forEach(pos => {
+    rot.assignments[pos.key] = [];
+  });
+  renderRotation();
+}
+
+// ════════════════════════════════════
+// INIT
+// ════════════════════════════════════
+
+initState();
+renderAttendance();
+renderFungoPanel();
+renderCoachRoles();
+renderTabs();
+renderRotation();
+</script>
+</body>
+</html>
